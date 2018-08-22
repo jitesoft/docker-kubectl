@@ -16,5 +16,5 @@ build:shared:
     - VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
     - BUILD=$(docker build --build-arg KUBECTL_VERSION=${VERSION} -q --no-cache .)
     - docker tag $BUILD ${CI_REGISTRY_IMAGE}:latest; docker push ${CI_REGISTRY_IMAGE}:latest
-    - docker tag $BUILD ${IMG_NAME}:latest; docker push ${IMG_NAME}:${VERSION}
-    - docker tag $BUILD ${IMG_NAME}:latest; docker push ${IMG_NAME}:${VERSION}
+    - docker tag $BUILD ${IMG_NAME}:latest; docker push ${IMG_NAME}:latest
+    - docker tag $BUILD ${IMG_NAME}:${VERSION}; docker push ${IMG_NAME}:${VERSION}

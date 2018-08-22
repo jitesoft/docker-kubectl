@@ -1,0 +1,19 @@
+image: docker:latest
+
+stages:
+  - build
+
+variables:
+  IMG_NAME: jitesoft/kubectl
+
+build:shared:
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} registry.gitlab.com
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+  script:
+    - VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+    - BUILD=$(docker build --build-arg KUBECTL_VERSION=${VERSION} -q --no-cache .)
+    - docker tag $BUILD ${CI_REGISTRY_IMAGE}:latest; docker push ${CI_REGISTRY_IMAGE}:latest
+    - docker tag $BUILD ${IMG_NAME}:latest; docker push ${IMG_NAME}:${VERSION}
+    - docker tag $BUILD ${IMG_NAME}:latest; docker push ${IMG_NAME}:${VERSION}

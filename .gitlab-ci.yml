@@ -10,7 +10,7 @@ build:shared:
   stage: build
   before_script:
     - apk add --no-cache curl
-    - echo ${CI_JOB_TOKEN} | docker login registry.gitab.com --password-stdin
+    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitab.com --password-stdin
     - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
   script:
     - VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)

@@ -7,6 +7,8 @@ variables:
   IMG_NAME: jitesoft/kubectl
 
 build:shared:
+  services:
+    - docker:dind
   stage: build
   before_script:
     - apk add --no-cache curl
@@ -14,8 +16,8 @@ build:shared:
     - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
   script:
     - VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-    - BUILD=$(docker build --build-arg KUBECTL_VERSION=${VERSION} -q --no-cache .)
-    - docker tag $BUILD ${CI_REGISTRY_IMAGE}:latest; docker push ${CI_REGISTRY_IMAGE}:latest
-    - docker tag $BUILD ${CI_REGISTRY_IMAGE}:${VERSION}; docker push ${CI_REGISTRY_IMAGE}:${VERSION}
-    - docker tag $BUILD ${IMG_NAME}:latest; docker push ${IMG_NAME}:latest
-    - docker tag $BUILD ${IMG_NAME}:${VERSION}; docker push ${IMG_NAME}:${VERSION}
+    - docker build --label "kubectl.version=${VERSION}" --build-arg KUBECTL_VERSION=${VERSION} -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker push ${CI_REGISTRY_IMAGE}:latest
+    - docker tag ${CI_REGISTRY_IMAGE}:latest ${CI_REGISTRY_IMAGE}:${VERSION}; docker push ${CI_REGISTRY_IMAGE}:${VERSION}
+    - docker tag ${CI_REGISTRY_IMAGE}:latest ${IMG_NAME}:latest; docker push ${IMG_NAME}:latest
+    - docker tag ${CI_REGISTRY_IMAGE}:latest ${IMG_NAME}:${VERSION}; docker push ${IMG_NAME}:${VERSION}

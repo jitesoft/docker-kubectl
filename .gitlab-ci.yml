@@ -1,3 +1,6 @@
+include:
+  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan.yml
+
 image: docker:latest
 
 stages:

@@ -1,5 +1,5 @@
 FROM registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
-ARG KUBECTL_VERSION="v1.14.0"
+ARG KUBECTL_VERSION
 LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
       maintainer.org="Jitesoft" \
       maintainer.org.uri="https://jitesoft.com" \

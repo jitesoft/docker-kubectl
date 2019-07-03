@@ -2,6 +2,7 @@ image: docker:latest
 
 stages:
   - build
+  - scan
 
 variables:
   IMG_NAME: jitesoft/kubectl
@@ -21,3 +22,9 @@ build:shared:
     - docker tag ${CI_REGISTRY_IMAGE}:latest ${CI_REGISTRY_IMAGE}:${VERSION}; docker push ${CI_REGISTRY_IMAGE}:${VERSION}
     - docker tag ${CI_REGISTRY_IMAGE}:latest ${IMG_NAME}:latest; docker push ${IMG_NAME}:latest
     - docker tag ${CI_REGISTRY_IMAGE}:latest ${IMG_NAME}:${VERSION}; docker push ${IMG_NAME}:${VERSION}
+
+scan:
+  stage: scan
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:latest"

@@ -13,7 +13,7 @@ build:shared:
   script:
     - VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
     - TAGS=$(helper taglist "${CI_REGISTRY_IMAGE},jitesoft/kubectl" "${VERSION},$(echo ${NODE} | cut -d'.' -f1),latest")
-    - echo "Tags:\ ${TAGS"}"
+    - echo "Tags - ${TAGS}"
     - docker buildx build --platform ${PLATFORMS} --push ${TAGS} --build-arg KUBECTL_VERSION=${VERSION} .
   tags: [ jitesoft, arm64, amd64, s390x, ppc64le ]
 

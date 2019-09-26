@@ -9,8 +9,9 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
       com.jitesoft.project.registry.uri="registry.gitlab.com/jitesoft/dockerfiles/kubectl" \
       com.jitesoft.app.kubectl.version="${KUBECTL_VERSION}"
 
+ARG TARGETARCH
 RUN apk add --no-cache ca-certificates curl \
-    && curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
+    && curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl -o /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl \
     && addgroup -g 1000 -S kube \
     && adduser -u 1000 -D -S -G kube kube

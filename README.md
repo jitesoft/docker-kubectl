@@ -1,6 +1,23 @@
 # Kubectl on Alpine Linux
 
-Example:
+
+## Tags
+
+The image is built automatically via CI, so the versions may change, but the CI script builds
+the latest stable versions and uses latest alpine as base image. Check `tags` for full list of supported
+versions.
+
+### Docker Hub images
+
+* `jitesoft/kubectl`
+    * `latest`, `v1.16`, `v1.16.0`
+
+### GitLab images
+
+* `registry.gitlab.com/jitesoft/dockerfiles/kubectl`
+    * `latest`, `v1.16`, `v1.16.0`
+
+## Usage
 
 ```bash 
 docker run --rm jitesoft/kubectl version

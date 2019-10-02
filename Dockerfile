@@ -10,11 +10,13 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
       com.jitesoft.app.kubectl.version="${KUBECTL_VERSION}"
 
 ARG TARGETARCH
+COPY ./entrypoint /usr/local/bin/entrypoint
 RUN apk add --no-cache ca-certificates curl \
     && curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl -o /usr/local/bin/kubectl \
-    && chmod +x /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/* \
     && addgroup -g 1000 -S kube \
     && adduser -u 1000 -D -S -G kube kube
 
 USER kube
-ENTRYPOINT ["kubectl"]
+ENTRYPOINT ["entrypoint"]
+CMD ["kubectl"]

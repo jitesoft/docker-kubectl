@@ -15,7 +15,7 @@ build:shared:
     - TAGS=$(helper taglist "${CI_REGISTRY_IMAGE},jitesoft/kubectl" "${VERSION},$(echo ${VERSION} | cut -d'.' -f1-2),latest")
     - echo "Tags - ${TAGS}"
     - docker buildx build --platform ${PLATFORMS} --push ${TAGS} --build-arg KUBECTL_VERSION=${VERSION} .
-  tags: [ jitesoft, arm64, amd64, s390x, ppc64le ]
+  tags: [ jitesoft, buildx, protected ]
 
 scan:
   extends: .container_scanning
